@@ -5,127 +5,160 @@
  * @format
  * @flow strict-local
  */
+import 'react-native-gesture-handler';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+import LoginScreen from './screens/LoginScreen';  
+import SignupScreen from './screens/SignupScreen';
+import HomeScreen from './screens/HomeScreen';
+import PickPetScreen from './screens/SignupScreen_PickPet';
+import InboxScreen from './screens/InboxScreen';
+import MatchRequestScreen from './screens/MatchRequestScreen';
+import FindYourPartnerScreen from './screens/FindYourPartnerScreen';
+import MatchMakerSettingsScreen from './screens/MatchMakerSettingsScreen';
+import MatchSearchScreen from './screens/MatchSearchScreen';
+import ProfileScreen from './screens/ProfileScreen';
+
 
 import React from 'react';
 
-
 import {
-  TouchableOpacity,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
+  View, Text,
+  StyleSheet, Button,
 } from 'react-native';
 
-//constants
-const Background = () => (
-  <Image source = {require('./assets/background.png')}
-  style= {styles.background}
-  />
-);
 
-const LoginButton = () => (
-  <Image source = {require('./assets/loginButton.png')}
-  style= {styles.loginButton}
-  />
-);
 
-const Facebook = () => (
-  <Image source = {require('./assets/facebook.png')}
-  style= {styles.facebook}
-  />
-);
-
-const Google = () => (
-  <Image source = {require('./assets/google.png')}
-  style= {styles.google}
-  />
-);
-
-const Username = () => (
-  <Image source = {require('./assets/username.png')}
-  style= {styles.username}
-  />
-);
-
-const Password = () => (
-  <Image source = {require('./assets/password.png')}
-  style= {styles.password}
-  />
+const Stack = createStackNavigator(
 );
 
 
 
+function Home2Screen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Login"
+        onPress={() => {
+          //send parameters
+          navigation.navigate('Login', {
+            itemId: 86,
+            otherParam: 'anything you want here',
+          });
+        }}
+      />
+      <Button
+        title="Go to Signup"
+        onPress={() => {
+        navigation.navigate('Signup');
+        }}
+      />
+       <Button
+        title="Go to Home"
+        onPress={() => {
+        navigation.navigate('Home');
+        }}
+      />
+       <Button
+        title="Go to pickpet"
+        onPress={() => {
+        navigation.navigate('PickPet');
+        }}
+      />
+       <Button
+        title="Go to Inbox"
+        onPress={() => {
+        navigation.navigate('Inbox');
+        }}
+      />
+       <Button
+        title="Go to Match Request"
+        onPress={() => {
+        navigation.navigate('MatchRequest');
+        }}
+      />
+       <Button
+        title="Go to Matchmaker Settings"
+        onPress={() => {
+        navigation.navigate('MatchMakerSettings');
+        }}
+      />
+       <Button
+        title="Go to Find Your Partner"
+        onPress={() => {
+        navigation.navigate('FindYourPartner');
+        
+        }}
+      />
+      <Button
+        title="Go to Profile"
+        onPress={() => {
+        navigation.navigate('Profile');
+        
+        }}
+      />
+      <Button
+        title="Go to Match Search"
+        onPress={() => {
+        navigation.navigate('MatchSearch');
+        
+        }}
+      />
+    </View>
+  );
+}
+
+function DetailsScreen({ route, navigation }) {
+  /* 2. Get the param */
+  const { itemId } = route.params;
+  const { otherParam } = route.params;
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+      <Text>itemId: {JSON.stringify(itemId)}</Text>
+      <Text>otherParam: {JSON.stringify(otherParam)}</Text>
+      <Button
+        title="Go to Details... again"
+        onPress={() =>
+          navigation.push('Details', {
+            itemId: Math.floor(Math.random() * 100),
+          })
+        }
+      />
+      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      <Button title="Go back" onPress={() => navigation.goBack()} />
+    </View>
+  );
+}
+
+
+//where i declare traveling
 const App: () => React$Node = () => {
   return (
-    <>
-    <Background/>
-
-  <View style={{
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: 'center',
-    alignItems: 'stretch'
-  }}>
-  <Text style= {styles.title}> Log In</Text>
-    
-    <Username/>
-    <Password/>
-    <Text style= {styles.forgotPassword}>Forgot Password?</Text>
-  {/*  <TouchableOpacity onPress={()=>console.log("TESTING")}>*/}
-    <LoginButton/>
-  {/* </TouchableOpacity>*/}
-    <Facebook/>
-    <Google/>
-    </View>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home2" component={Home2Screen}  options= {{headerShown: false}} />
+        <Stack.Screen name="Details" component={LoginScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="Login" component={LoginScreen} options= {{headerShown: false}}  />
+        <Stack.Screen name="Signup" component={SignupScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="Home" component={HomeScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="PickPet" component={PickPetScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="Inbox" component={InboxScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="MatchRequest" component={MatchRequestScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="FindYourPartner" component={FindYourPartnerScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="MatchMakerSettings" component={MatchMakerSettingsScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="MatchSearch" component={MatchSearchScreen}  options= {{headerShown: false}} />
+        <Stack.Screen name="Profile" component={ProfileScreen}  options= {{headerShown: false}} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-//relative positions disappear
-//conversion rate
+
 const styles = StyleSheet.create({
-  loginButton: {
-    position: "absolute",
-    top: 478.0870534,
-    left: 30
-  },   
-  background:{
-    top: -65
-    },
-  facebook:{
-  position:"absolute",
-  top: 593.1216516,
-  left:30
-  },
-  google:{
-  position:"absolute",
-  top: 593.1216516,
-  left: 219
-  },
-  username:{
-    position:"absolute",
-    top: 278.204241,
-    left: 30
-  },
-  password:{
-    position:"absolute",
-    top: 345.1037945,
-    left: 30
-  },
-  title:{
-    position:"absolute",
-    top:245.5703124,
-    left:30
-  },
-  forgotPassword:{
-    position:"absolute",
-    top:400.58,
-    left:290
-  }
+
 });
 
 export default App;
