@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
+
 
 const GenericButton = (props) => (
-    <View style={[styles.button, props.style]}>
-        <View style= {{justifyContent:"center"}}>
+    <TouchableOpacity onPress={ () => props.onPress()}>
+    <View style={[styles.button, props.style]}>  
+        <View style= {{justifyContent:"center"}}>   
             <Text style={styles.text}> {props.title}</Text>
-        </View>  
+        </View>
      </View>
+     </TouchableOpacity>
 
 );
 

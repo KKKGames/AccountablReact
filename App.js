@@ -30,8 +30,7 @@ import {
 
 
 
-const Stack = createStackNavigator(
-);
+const Stack = createStackNavigator();
 
 
 
@@ -110,8 +109,9 @@ function Home2Screen({ navigation }) {
   );
 }
 
+/*
 function DetailsScreen({ route, navigation }) {
-  /* 2. Get the param */
+  // 2. Get the param 
   const { itemId } = route.params;
   const { otherParam } = route.params;
   return (
@@ -132,7 +132,7 @@ function DetailsScreen({ route, navigation }) {
     </View>
   );
 }
-
+*/
 
 //where i declare traveling
 const App: () => React$Node = () => {

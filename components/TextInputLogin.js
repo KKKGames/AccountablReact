@@ -1,19 +1,22 @@
 import React from 'react';
-import { TextInput, StyleSheet, View, ImagePropTypes } from 'react-native';
+import { TextInput, StyleSheet, View, Text } from 'react-native';
+
 
 const TextInputLogin = (props) => {
-  const [value, onChangeText] = React.useState();
-
+   const {value, onChangeText} = props;
+ 
   return (
     <View style={styles.container}>
     <TextInput
+      
       placeholder={props.name}
       style={styles.textInputLogin}
-      onChangeText={text => onChangeText(text)}
+      onChangeText={value => onChangeText(value)}
       value={value}
       //underlineColorAndroid="transparent" TODO: LOOK INTO THIS AFTER
     />
     </View>
+  
   );
 }
 

@@ -12,29 +12,23 @@ import GenericButton from '../components/Button';
 import TextInputLogin from '../components/TextInputLogin'
 
 import {
-  Dimensions,
-  TouchableOpacity,
-  Image,
   ImageBackground,
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
 } from 'react-native';
 
-const Username = () => (
-  <Image source={require('../assets/username.png')}
-    style={styles.username}
-  />
-);
 
-const Password = () => (
-  <Image source={require('../assets/password.png')}
-    style={styles.password}
-  />
-);
+
+var username, password;
+
+function onUsernameChange(value) {
+  username = value;
+}
+function onPasswordChange(value) {
+  password = value;
+}
+
 
 const Separator = () => (
   <View style={styles.separator} />
@@ -42,9 +36,11 @@ const Separator = () => (
 
 
 const LoginScreen: () => React$Node = () => {
+
   return (
-    <>
-      <View style={{ flex: 1}}>
+    <>   
+    
+      <View style={{ flex: 1 }}>
         <ImageBackground
           source={require('../assets/backgroundLogin.png')}
           style={styles.background}>
@@ -52,17 +48,18 @@ const LoginScreen: () => React$Node = () => {
           <View style={{ flex: 1.45, flexDirection: "column-reverse", paddingLeft: '8%' }}>
             <Text style={styles.title}>Log In</Text>
 
-            <Text style={{marginVertical: 15}}>Welcome Back!</Text>
-          </View>
-          
-          <View style={{ flex: 0.8, alignSelf: "center", justifyContent: "space-around"}}>
-           <TextInputLogin name= "Username"/>
-           <TextInputLogin name= "Password"/>
+            <Text style={{ marginVertical: 15 }}>Welcome Back!</Text>
           </View>
 
-          <View style={{ flex: 1.3, alignSelf: "center",justifyContent:"space-evenly" }}>
+          <View style={{ flex: 0.8, alignSelf: "center", justifyContent: "space-around" }}>
+            <TextInputLogin name="Username" onChangeText={onUsernameChange} />
+            <TextInputLogin name="Password" onChangeText={onPasswordChange} />
 
-            <GenericButton style={styles.loginButton} title="Login" />
+          </View>
+
+          <View style={{ flex: 1.3, alignSelf: "center", justifyContent: "space-evenly" }}>
+
+            <GenericButton style={styles.loginButton} title="Login" onPress={login(props)} />
 
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <Separator />
@@ -71,31 +68,70 @@ const LoginScreen: () => React$Node = () => {
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <GenericButton style= {styles.facebook}
-            title="Facebook"> z
-            </GenericButton>
-            <GenericButton style= {styles.google}
-            title="Google">
-            </GenericButton>
+              <GenericButton style={styles.facebook}
+                title="Facebook"
+                onPress={facebook}
+              >
+              </GenericButton>
+              <GenericButton style={styles.google}
+                title="Google"
+                onPress={google}
+              >
+              </GenericButton>
             </View>
-            <Text style={{textAlign:"center"}}>Don't Have an Account?<Text style={{color: "red"}}> Sign up</Text></Text>
+            <Text style={{ textAlign: "center" }}>Don't Have an Account?<Text style={{ color: "red" }}> Sign up</Text></Text>
           </View>
 
         </ImageBackground>
       </View>
       {/*
-      <Separator />
-    <Username/>
-    <Password/>
     <Text style= {styles.forgotPassword}>Forgot Password?</Text>
     <TouchableOpacity onPress={()=>console.log("TESTING")}>
-    <LoginButton/>
-    <Facebook/>
-    <Google/>
   */}
     </>
   );
+
 };
+function testFunc(value) {
+  var myValue;
+  myValue = value;
+}
+
+function login(props) {
+ // props.navigate.navigate('Home');
+  console.log("TESTING LOGIN");
+  console.log(username);
+  console.log(password);
+  fetch('http://10.0.2.2:3000/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      Username: username,
+      Password: password
+    })
+  }).then((response) => response.json())
+    .then((responseData) => {
+      console.log('response object:', responseData)
+      //MOVE TO DIFFERENT SCREEN
+  //    if (responseData == "SUCCESS") {
+   //     props.navigate.navigate('Home');
+ //     }
+    }).catch((error) => {
+      console.error(error);
+    });
+}
+
+
+
+function google() {
+  console.log("TESTING2");
+}
+
+function facebook() {
+  console.log("TESTING2");
+}
 
 //relative positions disappear
 //conversion rate
@@ -105,14 +141,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: 'center',
     alignItems: 'stretch',
-   
+
   },
   background: {
     width: '100%',
     height: '100%'
   },
   loginButton: {
-   // borderRadius: 12,
+    // borderRadius: 12,
     //position: "absolute",
     //top: 478.0870534,
     //width: 90,
@@ -144,7 +180,7 @@ const styles = StyleSheet.create({
     // flexDirection:"column",
     //  alignSelf: "flex-end",
     // position: "absolute",
-   // paddingLeft: "10%",
+    // paddingLeft: "10%",
     //top: '35%',
     //left:30
   },
