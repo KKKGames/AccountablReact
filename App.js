@@ -23,11 +23,24 @@ import ProfileScreen from './screens/ProfileScreen';
 
 import React from 'react';
 
+
 import {
   View, Text,
   StyleSheet, Button,
 } from 'react-native';
 
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async (username) => {
+  try {
+    //linebelow is for objects
+   // const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem('@storage_Key', username)
+  } catch (e) {
+    // saving error
+  }
+}
 
 
 const Stack = createStackNavigator();
@@ -43,8 +56,7 @@ function Home2Screen({ navigation }) {
         onPress={() => {
           //send parameters
           navigation.navigate('Login', {
-            itemId: 86,
-            otherParam: 'anything you want here',
+            itemId: 86, 
           });
         }}
       />
@@ -76,7 +88,8 @@ function Home2Screen({ navigation }) {
         title="Go to Match Request"
         onPress={() => {
         navigation.navigate('MatchRequest');
-        }}
+        
+      }}
       />
        <Button
         title="Go to Matchmaker Settings"

@@ -6,11 +6,11 @@ const TextInputLogin = (props) => {
    const {value, onChangeText} = props;
  
   return (
-    <View style={styles.container}>
+    <View style={styles.container,props.style}>
     <TextInput
-      
+        
       placeholder={props.name}
-      style={styles.textInputLogin}
+      style={[styles.textInputLogin, props.style]}
       onChangeText={value => onChangeText(value)}
       value={value}
       //underlineColorAndroid="transparent" TODO: LOOK INTO THIS AFTER

@@ -3,6 +3,7 @@ import React from 'react';
 
 import HeaderCustom from '../components/Header';
 import GenericButton from '../components/Button';
+import {FREQUENCY} from '../common/constants';
 
 import {
   Image,
@@ -11,6 +12,12 @@ import {
   View,
   Text,
 } from 'react-native';
+
+import { Picker } from '@react-native-community/picker';
+import CheckBox from '@react-native-community/checkbox';
+import SliderCustom from '../components/Slider';
+
+
 
 const Username = () => (
   <Image source={require('../assets/username.png')}
@@ -24,7 +31,9 @@ const Password = () => (
   />
 );
 
-const MatchMakerSettingsScreen: () => React$Node = () => {
+
+
+const MatchMakerSettingsScreen: () => React$Node = (props) => {
   return (
     <>
       <View style={{ flex: 1}}>
@@ -32,18 +41,48 @@ const MatchMakerSettingsScreen: () => React$Node = () => {
             <HeaderCustom title="Matchmaking Settings"></HeaderCustom>
           </View>
           
-          <View style={{ flex: 1.75,}}>
+          <View style={{ flex: 1.75, justifyContent: "center"}}>
            <Text style={styles.header}>Goal Category:</Text>
-            <Text>Create Dropdownbox</Text>         
+            {/* <Text>Create Dropdownbox</Text>         
+               */}
+               <Picker
+                    //  selectedValue={this.state.language}
+                      style={{height: 50, width: 100}}
+                      mode="dropdown"
+                    //  onValueChange={(itemValue, itemIndex) =>
+                     //  this.setState({language: itemValue})}
+                     >
+                   
+               <Picker.Item label="Goal1" value="java" />
+               <Picker.Item label="Goal2" value="js" />
+            </Picker>
             <Text style={styles.header}>Age Range:</Text>  
-            <Text>Create slider</Text>
+            {/* <Text>Create slider</Text>
+*/}
+            <SliderCustom>
+            </SliderCustom>
             <Text style={styles.header}>Do you want to be matched by:</Text>  
-            <Text>Checkbox1</Text>
-            <Text>Checkbox2</Text>
+            <View style={{flexDirection:"row", justifyContent: "center", alignContent: "center"}}>
+            <CheckBox></CheckBox> 
+            <Text>Location</Text>
+            </View>
+            <View style={{flexDirection:"row", justifyContent: "center", alignContent: "center"}}>
+            <CheckBox></CheckBox> 
+            <Text>School</Text>
+            </View>
             <Text style={styles.header}>How often do you want to communicate:</Text>  
-            <Text>Checkbox1</Text>
-            <GenericButton title="Save and Continue"/>
+            <Picker
+            
+            >
+            <Picker.Item label={FREQUENCY.MINIMAL} value="java" />
+            <Picker.Item label={FREQUENCY.OCCASIONALLY} value="java" />
+            <Picker.Item label={FREQUENCY.OFTEN} value="java" />
+            <Picker.Item label={FREQUENCY.CONSTANT} value="java" />
+             </Picker>
+            <View  style={{alignItems:"center"}}>
+            <GenericButton title="Save and Continue" onPress={()=> props.navigation.navigate("MatchSearch")}/>
             <Text style={styles.cancel}>Cancel</Text>
+            </View>
           </View>
 
           <View style={{ flex: 0.28 }}>

@@ -52,7 +52,7 @@ const Password = () => (
     />
 );
 
-const PickPetScreen: () => React$Node = () => {
+const PickPetScreen: () => React$Node = (props) => {
     return (
         <>
             <View style={{ flex: 1 }}>
@@ -74,7 +74,7 @@ const PickPetScreen: () => React$Node = () => {
                     </View>
 
                     <View style={{ flex: 0.5, alignSelf: "center", justifyContent: "space-evenly" }}>
-                        <GenericButton style={styles.loginButton} title="Confirm" />
+                        <GenericButton style={styles.loginButton} title="Confirm" onPress={()=>choosePet(props)}/>
                     </View>
 
                 </ImageBackground>
@@ -82,6 +82,37 @@ const PickPetScreen: () => React$Node = () => {
         </>
     );
 };
+
+function choosePet(props) {
+    //SEND INFO TO DB
+    console.log("TESTING PICKPET");
+
+    props.navigation.navigate("Home");
+   
+     /*
+    fetch('http://10.0.2.2:3000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        Username: username,
+        Password: password
+      })
+    }).then((response) => response.json())
+      .then((responseData) => {
+        console.log('response object:', responseData)
+        //MOVE TO DIFFERENT SCREEN
+        if (responseData == "SUCCESS") {
+        props.navigation.navigate("Home");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+  */
+    }
+
+  
 
 const styles = StyleSheet.create({
     container: {

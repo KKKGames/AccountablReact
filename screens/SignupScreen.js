@@ -36,7 +36,7 @@ const Password = () => (
   />
 );
 
-const SignupScreen: () => React$Node = () => {
+const SignupScreen: () => React$Node = (props) => {
   return (
     <>
       <View style={{ flex: 1}}>
@@ -58,7 +58,7 @@ const SignupScreen: () => React$Node = () => {
 
           <View style={{ flex: 0.5, alignSelf: "center",justifyContent:"space-evenly" }}>
             <Text>Are you a student?</Text>
-            <GenericButton style={styles.loginButton} title="Sign Up" />
+            <GenericButton style={styles.loginButton} title="Sign Up" onPress={()=>signup(props)} />
           </View>
 
         </ImageBackground>
@@ -66,6 +66,36 @@ const SignupScreen: () => React$Node = () => {
     </>
   );
 };
+
+
+function signup(props) {
+  //SEND INFO TO DB
+  console.log("TESTING SIGNUP");
+
+
+  props.navigation.navigate("PickPet");
+  /*
+  fetch('http://10.0.2.2:3000/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      Username: username,
+      Password: password
+    })
+  }).then((response) => response.json())
+    .then((responseData) => {
+      console.log('response object:', responseData)
+      //MOVE TO DIFFERENT SCREEN
+      if (responseData == "SUCCESS") {
+      props.navigation.navigate("Home");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+*/
+  }
 
 const styles = StyleSheet.create({
     container: {
