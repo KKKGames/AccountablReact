@@ -10,15 +10,42 @@ import React from 'react';
 
 import GenericButton from '../components/Button';
 import TextInputLogin from '../components/TextInputLogin'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USERNAME_KEY} from '../common/constants';
 
 import {
   ImageBackground,
   StyleSheet,
   View,
   Text,
+  Button
 } from 'react-native';
 
 
+
+const storeUser = async (username) => {
+  try {
+    //linebelow is for objects
+   // const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem(USERNAME_KEY, username)
+  } catch (e) {
+    // saving error
+  }
+}
+
+/* not needed here
+const getData = async () => {
+  try {
+    const value = await AsyncStorage.getItem(USERNAME_KEY)
+    if(value !== null) {
+      // value previously stored
+      console.log("TEST" + value);
+    }
+  } catch(e) {
+    // error reading value
+  }
+}
+*/
 
 var username, password;
 
@@ -33,13 +60,16 @@ function onPasswordChange(value) {
 const Separator = () => (
   <View style={styles.separator} />
 );
-
-
-const LoginScreen: () => React$Node = () => {
+/*
+React.useEffect(() => {
+  getData()
+}, []);
+*/
+const LoginScreen: () => React$Node = (props) => {
+  //const [currentScreen, screenNumber] = React.useState(0);
 
   return (
-    <>   
-    
+    <>     
       <View style={{ flex: 1 }}>
         <ImageBackground
           source={require('../assets/backgroundLogin.png')}
@@ -59,8 +89,10 @@ const LoginScreen: () => React$Node = () => {
 
           <View style={{ flex: 1.3, alignSelf: "center", justifyContent: "space-evenly" }}>
 
-            <GenericButton style={styles.loginButton} title="Login" onPress={login(props)} />
-
+          <GenericButton style={styles.loginButton} title="Login" onPress={()=>login(props)} />
+  {/*         
+             <GenericButton style={styles.loginButton} title="Login" onPress={login(props)} />
+  */}
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <Separator />
               <Text>OR</Text>
@@ -92,14 +124,13 @@ const LoginScreen: () => React$Node = () => {
   );
 
 };
-function testFunc(value) {
-  var myValue;
-  myValue = value;
+function testFunc(props) {
+ props.navigation.navigate("Home");
 }
 
 function login(props) {
- // props.navigate.navigate('Home');
   console.log("TESTING LOGIN");
+  storeUser(username);
   console.log(username);
   console.log(password);
   fetch('http://10.0.2.2:3000/login', {
@@ -114,10 +145,11 @@ function login(props) {
   }).then((response) => response.json())
     .then((responseData) => {
       console.log('response object:', responseData)
+
       //MOVE TO DIFFERENT SCREEN
-  //    if (responseData == "SUCCESS") {
-   //     props.navigate.navigate('Home');
- //     }
+      if (responseData == "SUCCESS") {
+      props.navigation.navigate("Home");
+      }
     }).catch((error) => {
       console.error(error);
     });
@@ -126,6 +158,7 @@ function login(props) {
 
 
 function google() {
+  getData();
   console.log("TESTING2");
 }
 

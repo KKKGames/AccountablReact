@@ -13,23 +13,25 @@ import HeaderCustom from '../components/Header'
 import ProfilePic from '../components/ProfilePic'
 
 import {
-  Image,
   ImageBackground,
   StyleSheet,
   View,
   Text,
+  TouchableOpacity
 } from 'react-native';
 
 const MiddleButton = (props) => (
+  <TouchableOpacity onPress={ () => props.onPress()}>
   <View style={[styles.button, props.style]}>
       <View style= {{justifyContent:"center"}}>
           <Text style={styles.text}> {props.title}</Text>
       </View>  
   </View>
+  </TouchableOpacity>
 );
 
 
-const HomeScreen: () => React$Node = () => {
+const HomeScreen: () => React$Node = (props) => {
   return (
     <>
       <View style={{ flex: 1 }}>
@@ -42,7 +44,7 @@ const HomeScreen: () => React$Node = () => {
 
           <View style={{ flex: 1.75, justifyContent: "space-evenly", flexDirection: "column", alignItems: "center" }}>
             <ProfilePic style={styles.circle}/>
-            <MiddleButton title="Match"/>
+            <MiddleButton title="Match" onPress={()=>props.navigation.navigate("MatchMakerSettings")}/>
             <MiddleButton title="Write in Journal"/>
             <MiddleButton title="View Daily Checklist"/>
           </View>

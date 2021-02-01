@@ -5,6 +5,7 @@ import HeaderCustom from '../components/Header';
 import BottomTab from '../components/BottomTab';
 import ProfilePic from '../components/ProfilePic';
 import RequestMatchComponent from '../components/RequestMatchComponent'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import {
   Image,
@@ -14,6 +15,23 @@ import {
   Text,
   ScrollView
 } from 'react-native';
+
+const getData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('@save_user')
+    if(value !== null) {
+      // value previously stored
+      console.log("Persisted User:");
+      console.log(value);
+      requestSender=value;
+    }else{
+      console.log("ok: " + value);
+    }
+  } catch(e) {
+    // error reading value
+    console.log(e);
+  }
+}
 
 const Username = () => (
   <Image source={require('../assets/username.png')}
@@ -41,13 +59,9 @@ const MatchRequestScreen: () => React$Node = () => {
                 <Text style={styles.matchesText}>      Matches     </Text>
                 <Text style={styles.matchRequestText}>      Match Request     </Text>
               </View>
-              <RequestMatchComponent/>
-              <RequestMatchComponent/>
-              <RequestMatchComponent/>
-              <RequestMatchComponent/>
-              <RequestMatchComponent/>
-              <RequestMatchComponent/>
-          </ScrollView>
+              <RequestMatchComponent name="ok"/>
+              <RequestMatchComponent name="sf"/>
+             </ScrollView>
         </View>
 
           <View style={{ flex: 0.28 }}>

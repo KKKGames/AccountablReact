@@ -6,6 +6,7 @@ import BottomTab from '../components/BottomTab';
 
 import ProfilePic from '../components/ProfilePic';
 
+
 import {
   Image,
   ImageBackground,
@@ -13,6 +14,7 @@ import {
   View,
   Text,
 } from 'react-native';
+import TextInputLogin from '../components/TextInputLogin';
 
 const Username = () => (
   <Image source={require('../assets/username.png')}
@@ -44,11 +46,15 @@ const ProfileScreen: () => React$Node = () => {
               <Text style={styles.name}>Bobby Rambarack</Text>
               <Text>Age: 30</Text>
             </View>
-            <View>
+            <View style={{flexDirection:"column"}} >
               <Text>Bio</Text>
-              
+              <TextInputLogin style={styles.boxBio}></TextInputLogin>
+              <Text>Location</Text>
+              <TextInputLogin></TextInputLogin>
+              <Text>School</Text>
+              <TextInputLogin></TextInputLogin>
             </View>
-
+            
           </View>
 
           <View style={{ flex: 0.28 }}>
@@ -75,6 +81,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#1C5C84"
 
+  },
+  boxBio:{
+    width: 350,
+    height: 100,
+    borderColor: '#E9F0F3',
+    borderWidth: 1,
+    borderRadius: 12  ,
+    shadowOffset: {width: 0, height:4},
+    elevation: 1,
+    shadowRadius: 16,
+    shadowColor: 'rgba(28, 92, 132, 0.15)',
   }
 });
 
